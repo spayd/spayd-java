@@ -1,6 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *  Copyright (c) 2012, Paylibo (www.paylibo.com).
  */
 package com.paylibo.utilities;
 
@@ -10,7 +9,7 @@ package com.paylibo.utilities;
  */
 public class PayliboConstants {
     
-    public static Integer minQRSize = 300;
+    public static Integer minQRSize = 250;
     public static Integer maxQRSize = 800;
     
 }
