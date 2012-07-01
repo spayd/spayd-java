@@ -3,8 +3,6 @@
  */
 package com.paylibo.account;
 
-import com.sun.media.sound.InvalidFormatException;
-
 /**
  *
  * @author petrdvorak
@@ -27,10 +25,10 @@ public class CzechBankAccount extends BankAccount {
         return bankCode;
     }
 
-    public void setBankCode(String bankCode) throws InvalidFormatException {
+    public void setBankCode(String bankCode) throws IllegalArgumentException {
         for (int i = 0; i < bankCode.length(); i++) {
             if (bankCode.charAt(i) < 0 && bankCode.charAt(i) > 9) {
-                throw new InvalidFormatException("Czech account number (bank code) must be numeric.");
+                throw new IllegalArgumentException("Czech account number (bank code) must be numeric.");
             }
         }
         this.bankCode = bankCode;
@@ -40,10 +38,10 @@ public class CzechBankAccount extends BankAccount {
         return number;
     }
 
-    public void setNumber(String number) throws InvalidFormatException {
+    public void setNumber(String number) throws IllegalArgumentException {
         for (int i = 0; i < number.length(); i++) {
             if (number.charAt(i) < 0 && number.charAt(i) > 9) {
-                throw new InvalidFormatException("Czech account number (basic part) must be numeric.");
+                throw new IllegalArgumentException("Czech account number (basic part) must be numeric.");
             }
         }
         this.number = number;
@@ -53,10 +51,10 @@ public class CzechBankAccount extends BankAccount {
         return prefix;
     }
 
-    public void setPrefix(String prefix) throws InvalidFormatException {
+    public void setPrefix(String prefix) throws IllegalArgumentException {
         for (int i = 0; i < prefix.length(); i++) {
             if (prefix.charAt(i) < 0 && prefix.charAt(i) > 9) {
-                throw new InvalidFormatException("Czech account number (prefix) must be numeric.");
+                throw new IllegalArgumentException("Czech account number (prefix) must be numeric.");
             }
         }
         this.prefix = prefix;
