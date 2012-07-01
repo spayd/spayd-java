@@ -10,6 +10,8 @@ package com.paylibo.utilities;
 public class PayliboValidationError {
     private String errorCode;
     private String errorDescription;
+    
+    public static String ERROR_INVALID_STRUCTURE = "ERROR_INVALID_STRUCTURE";
 
     public String getErrorCode() {
         return errorCode;
