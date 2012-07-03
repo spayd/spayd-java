@@ -48,6 +48,7 @@ public class CzechBankAccount extends BankAccount {
     }
 
     public String getPrefix() {
+        if (prefix == null) return "000000";
         return prefix;
     }
 
