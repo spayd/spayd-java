@@ -4,6 +4,7 @@
 package com.paylibo.string;
 
 import com.paylibo.account.BankAccount;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -37,7 +38,8 @@ public class Paylibo {
             payliboString += "ID:" + parameters.getIdentifier() + "/";
         }
         if (parameters.getDate() != null) {
-            payliboString += "DT:" + parameters.getDate() + "/";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+            payliboString += "DT:" + simpleDateFormat.format(parameters.getDate()) + "/";
         }
         if (parameters.getMessage() != null) {
             payliboString += "MSG:" + parameters.getMessage() + "/";

@@ -24,6 +24,7 @@ public class PayliboValidationError {
     public static String ERROR_INVALID_KEY_FOUND            = "ERROR_INVALID_KEY_FOUND";
     public static String ERROR_INVALID_IBAN                 = "ERROR_INVALID_IBAN";
     public static String ERROR_IBAN_NOT_FOUND               = "ERROR_IBAN_NOT_FOUND";
+    public static String ERROR_REQUEST_GENERIC              = "ERROR_REQUEST_GENERIC";
 
     public String getErrorCode() {
         return errorCode;

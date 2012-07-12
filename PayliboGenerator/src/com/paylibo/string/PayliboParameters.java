@@ -4,6 +4,7 @@
 package com.paylibo.string;
 
 import java.util.Date;
+import net.sf.junidecode.Junidecode;
 
 /**
  *
@@ -33,7 +34,11 @@ public class PayliboParameters {
     }
 
     public void setBic(String bic) {
-        this.bic = bic;
+        if (bic == null) {
+            this.bic = null;
+        } else {
+            this.bic = Junidecode.unidecode(bic).toUpperCase();;
+        }
     }
 
     public String getCurrency() {
@@ -57,7 +62,11 @@ public class PayliboParameters {
     }
 
     public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+        if (identifier == null) {
+            this.identifier = null;
+        } else {
+            this.identifier = Junidecode.unidecode(identifier).toUpperCase();
+        }
     }
 
     public String getMessage() {
@@ -65,7 +74,11 @@ public class PayliboParameters {
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        if (message == null) {
+            this.message = null;
+        } else {
+            this.message =  Junidecode.unidecode(message).toUpperCase();
+        }
     }
 
     public String getRecipientName() {
@@ -73,7 +86,11 @@ public class PayliboParameters {
     }
 
     public void setRecipientName(String recipientName) {
-        this.recipientName = recipientName;
+        if (recipientName == null) {
+            this.recipientName = null;
+        } else {
+            this.recipientName = Junidecode.unidecode(recipientName).toUpperCase();
+        }
     }
 
     public String getSendersReference() {
@@ -81,7 +98,11 @@ public class PayliboParameters {
     }
 
     public void setSendersReference(String sendersReference) {
-        this.sendersReference = sendersReference;
+        if (sendersReference == null) {
+            this.sendersReference = null;
+        } else {
+            this.sendersReference = Junidecode.unidecode(sendersReference).toUpperCase();
+        }
     }
     
 }
