@@ -21,7 +21,7 @@ public class PayliboValidator {
 
     public static List<PayliboValidationError> validatePayliboString(String payliboString) {
         List<PayliboValidationError> errors = new LinkedList<PayliboValidationError>();
-        if (!payliboString.matches("PAY/[0-9]+\\.[0-9]+(/[0-9A-Z $%*+-.]+:[0-9A-Z $%*+-.:]*)+/?")) {
+        if (!payliboString.matches("PAY\\*[0-9]+\\.[0-9]+\\*(/[0-9A-Z $%*+-.]+:[^*]+\\*)+/?")) {
             PayliboValidationError error = new PayliboValidationError();
             error.setErrorCode(PayliboValidationError.ERROR_INVALID_STRUCTURE);
             error.setErrorDescription("Paylibo code didn't pass the basic regexp validation.");
