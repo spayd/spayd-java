@@ -18,8 +18,10 @@ public class PayliboParameters {
     private String sendersReference;
     private String recipientName;
     private String identifier;
+    private String paymentType;
     private Date   date;
     private String message;
+    private String crc32;
 
     public Number getAmount() {
         return amount;
@@ -34,11 +36,7 @@ public class PayliboParameters {
     }
 
     public void setBic(String bic) {
-        if (bic == null) {
-            this.bic = null;
-        } else {
-            this.bic = Junidecode.unidecode(bic).toUpperCase();;
-        }
+        this.bic = bic;
     }
 
     public String getCurrency() {
@@ -62,11 +60,7 @@ public class PayliboParameters {
     }
 
     public void setIdentifier(String identifier) {
-        if (identifier == null) {
-            this.identifier = null;
-        } else {
-            this.identifier = Junidecode.unidecode(identifier).toUpperCase();
-        }
+        this.identifier = identifier;
     }
 
     public String getMessage() {
@@ -74,11 +68,7 @@ public class PayliboParameters {
     }
 
     public void setMessage(String message) {
-        if (message == null) {
-            this.message = null;
-        } else {
-            this.message =  Junidecode.unidecode(message).toUpperCase();
-        }
+        this.message = message;
     }
 
     public String getRecipientName() {
@@ -86,11 +76,7 @@ public class PayliboParameters {
     }
 
     public void setRecipientName(String recipientName) {
-        if (recipientName == null) {
-            this.recipientName = null;
-        } else {
-            this.recipientName = Junidecode.unidecode(recipientName).toUpperCase();
-        }
+        this.recipientName = recipientName;
     }
 
     public String getSendersReference() {
@@ -98,11 +84,23 @@ public class PayliboParameters {
     }
 
     public void setSendersReference(String sendersReference) {
-        if (sendersReference == null) {
-            this.sendersReference = null;
-        } else {
-            this.sendersReference = Junidecode.unidecode(sendersReference).toUpperCase();
-        }
+        this.sendersReference = sendersReference;
+    }
+
+    public String getCrc32() {
+        return crc32;
+    }
+
+    public void setCrc32(String crc32) {
+        this.crc32 = crc32;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
     
 }
