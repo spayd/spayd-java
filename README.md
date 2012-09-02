@@ -1,10 +1,10 @@
-# Smart Payment Format Generator
+# SmartPaymentDescriptor Generator
 
-SmartPayment Format is a lightweight format for exchanging a payment
+SmartPaymentDescriptor is a lightweight format for exchanging a payment
 information. A vCard for payment instead of contacts, if you will..
 
-This Java library simplifies adding the support for generating/validating the SmartPayment
-Format (both file and QR code generation) to any Java based system.
+This Java library simplifies adding the support for generating/validating the SmartPaymentDescriptor
+(both file and QR code generation) to any Java based system.
 
 ## License
 
