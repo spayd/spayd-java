@@ -18,3 +18,5 @@ nb-configuration.xml
 *.war
 *.ear
 /PayliboGenerator/nbproject/private/
+/SmartPaymentGenerator1/nbproject/private/
+/SmartPaymentGenerator/nbproject/private/
