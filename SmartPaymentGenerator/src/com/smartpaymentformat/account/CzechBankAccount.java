@@ -73,5 +73,15 @@ public class CzechBankAccount extends BankAccount {
     public String getIBAN() {
         return IBANUtilities.computeIBANFromCzechBankAccount(this);
     }
+
+    @Override
+    public String getBIC() {
+        return bic;
+    }
+
+    @Override
+    public void setBIC(String bic) {
+        this.bic = bic;
+    }
     
 }
