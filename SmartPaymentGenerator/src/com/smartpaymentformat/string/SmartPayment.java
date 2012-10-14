@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2012, SmartPayment (www.SmartPayment.com).
+ * Copyright (c) 2012, SmartPayment (www.SmartPayment.com).
  */
 package com.smartpaymentformat.string;
 
@@ -15,12 +15,28 @@ public class SmartPayment {
 
     private static String protocolVersion = "1.0";
 
-    public static String paymentStringFromAccount(BankAccount account, SmartPaymentParameters parameters, SmartPaymentMap extendedParameters, boolean transliterateParams) {
+    public static String paymentStringFromAccount(SmartPaymentParameters parameters, SmartPaymentMap extendedParameters, boolean transliterateParams) {
         String paymentString = "PAY*" + protocolVersion + "*";
-        if (account.getIBAN() != null) {
-            paymentString += "ACC:" + account.getIBAN();
-            if (parameters.getBic() != null) {
-                paymentString += "+" + parameters.getBic();
+        if (parameters.getBankAccount().getIBAN() != null) {
+            paymentString += "ACC:" + parameters.getBankAccount().getIBAN();
+            if (parameters.getBankAccount().getBIC() != null) {
+                paymentString += "+" + parameters.getBankAccount().getBIC();
+            }
+            paymentString += "*";
+        }
+        if (parameters.getAlternateAccounts() != null && !parameters.getAlternateAccounts().isEmpty()) {
+            paymentString += "ALT-ACC:";
+            boolean firstItem = true;
+            for (BankAccount bankAccount : parameters.getAlternateAccounts()) {
+                if (!firstItem) {
+                    paymentString += ",";
+                } else {
+                    firstItem = false;
+                }
+                paymentString += parameters.getBankAccount().getIBAN();
+                if (parameters.getBankAccount().getBIC() != null) {
+                    paymentString += "+" + parameters.getBankAccount().getBIC();
+                }
             }
             paymentString += "*";
         }
@@ -38,9 +54,6 @@ public class SmartPayment {
                     ? Junidecode.unidecode(parameters.getRecipientName().toUpperCase())
                     : parameters.getRecipientName()).replaceAll("\\*", "%2A") + "*";
         }
-        if (parameters.getIdentifier() != null) {
-            paymentString += "ID:" + parameters.getIdentifier() + "*";
-        }
         if (parameters.getDate() != null) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
             paymentString += "DT:" + simpleDateFormat.format(parameters.getDate()) + "*";
@@ -49,6 +62,16 @@ public class SmartPayment {
             paymentString += "MSG:" + (transliterateParams
                     ? Junidecode.unidecode(parameters.getMessage().toUpperCase())
                     : parameters.getMessage()).replaceAll("\\*", "%2A") + "*";
+        }
+        if (parameters.getNotificationType() != null) {
+            if (parameters.getNotificationType() == SmartPaymentParameters.PaymentNotificationType.email) {
+                paymentString += "NT:E*";
+            } else if (parameters.getNotificationType() == SmartPaymentParameters.PaymentNotificationType.phone) {
+                paymentString += "NT:P*";
+            }
+        }
+        if (parameters.getNotificationValue() != null) {
+            paymentString += "NV:" + parameters.getNotificationValue() + "*";
         }
         if (extendedParameters != null && !extendedParameters.isEmpty()) {
             paymentString += (transliterateParams
