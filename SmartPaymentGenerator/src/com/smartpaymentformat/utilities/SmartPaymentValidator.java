@@ -15,6 +15,7 @@ public class SmartPaymentValidator {
 
     private static String[] allowedKeys = {
         "ACC",
+        "ALT-ACC",
         "AM",
         "CC",
         "RF",
@@ -22,6 +23,8 @@ public class SmartPaymentValidator {
         "DT",
         "PT",
         "MSG",
+        "NT",
+        "NTA",
         "CRC32"};
 
     public static List<SmartPaymentValidationError> validatePaymentString(String paymentString) {
@@ -62,6 +65,14 @@ public class SmartPaymentValidator {
                     error.setErrorDescription("IBAN+BIC pair was not in the correct format.");
                     errors.add(error);
                 }
+            } else if (key.equals("ALT-ACC")) {
+                ibanFound = true;
+                if (!value.matches("^([A-Z]{2,2}[0-9]+)(\\+([A-Z0-9]+))?(,([A-Z]{2,2}[0-9]+)(\\+([A-Z0-9]+))?)*$")) {
+                    SmartPaymentValidationError error = new SmartPaymentValidationError();
+                    error.setErrorCode(SmartPaymentValidationError.ERROR_INVALID_ALTERNATE_IBAN);
+                    error.setErrorDescription("Alternate accounts are not properly formatted - should be IBAN+BIC list with items separated by ',' character.");
+                    errors.add(error);
+                }
             } else if (key.equals("AM")) {
                 if (!value.matches("^[0-9]{0,10}(\\.[0-9]{0,2})?$") || value.equals(".")) {
                     SmartPaymentValidationError error = new SmartPaymentValidationError();
@@ -92,11 +103,11 @@ public class SmartPaymentValidator {
                     error.setErrorDescription("Recipient name must be a string with length between 1 and 40 characters.");
                     errors.add(error);
                 }
-            } else if (key.equals("ID")) {
-                if (value.length() > 10 || value.length() < 1) {
+            } else if (key.equals("NT")) {
+                if (!value.equals("E") && !value.equals("P")) {
                     SmartPaymentValidationError error = new SmartPaymentValidationError();
-                    error.setErrorCode(SmartPaymentValidationError.ERROR_INVALID_INTERNAL_ID);
-                    error.setErrorDescription("Internal ID must be a string with length between 1 and 10 characters.");
+                    error.setErrorCode(SmartPaymentValidationError.ERROR_INVALID_NOTIFICATION_TYPE);
+                    error.setErrorDescription("Notification type must be 'E' (e-mail) or 'P' (phone).");
                     errors.add(error);
                 }
             } else if (key.equals("DT")) {
