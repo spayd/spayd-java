@@ -3,7 +3,9 @@
  */
 package com.smartpaymentformat.string;
 
+import com.smartpaymentformat.account.BankAccount;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -11,16 +13,39 @@ import java.util.Date;
  */
 public class SmartPaymentParameters {
     
-    private String bic;
+    private BankAccount bankAccount;
+    private List<BankAccount> alternateAccounts;
     private Number amount;
     private String currency;
     private String sendersReference;
     private String recipientName;
-    private String identifier;
-    private String paymentType;
     private Date   date;
+    private String paymentType;
     private String message;
+    private PaymentNotificationType notificationType;
+    private String notificationValue;
     private String crc32;
+
+    public enum PaymentNotificationType {
+        email,
+        phone
+    }
+
+    public List<BankAccount> getAlternateAccounts() {
+        return alternateAccounts;
+    }
+
+    public void setAlternateAccounts(List<BankAccount> alternateAccounts) {
+        this.alternateAccounts = alternateAccounts;
+    }
+
+    public BankAccount getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
+    }
 
     public Number getAmount() {
         return amount;
@@ -28,14 +53,6 @@ public class SmartPaymentParameters {
 
     public void setAmount(Number amount) {
         this.amount = amount;
-    }
-
-    public String getBic() {
-        return bic;
-    }
-
-    public void setBic(String bic) {
-        this.bic = bic;
     }
 
     public String getCurrency() {
@@ -52,14 +69,6 @@ public class SmartPaymentParameters {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     public String getMessage() {
@@ -86,20 +95,36 @@ public class SmartPaymentParameters {
         this.sendersReference = sendersReference;
     }
 
-    public String getCrc32() {
-        return crc32;
-    }
-
-    public void setCrc32(String crc32) {
-        this.crc32 = crc32;
-    }
-
     public String getPaymentType() {
         return paymentType;
     }
 
     public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public PaymentNotificationType getNotificationType() {
+        return notificationType;
+    }
+
+    public void setNotificationType(PaymentNotificationType notificationType) {
+        this.notificationType = notificationType;
+    }
+
+    public String getNotificationValue() {
+        return notificationValue;
+    }
+
+    public void setNotificationValue(String notificationValue) {
+        this.notificationValue = notificationValue;
+    }
+    
+    public String getCrc32() {
+        return crc32;
+    }
+
+    public void setCrc32(String crc32) {
+        this.crc32 = crc32;
     }
     
 }
