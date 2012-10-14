@@ -60,4 +60,19 @@ public class SmartPaymentValidatorTest {
         assertNull(result);
     }
     
+    /**
+     * Test of generating Paylibo string with alternate account
+     */
+    @Test
+    public void testValidatePaymentStringAlternateAccounts() {
+        System.out.println("testValidatePaymentStringAlternateAccounts");
+        String paymentString = "PAY*1.0*ACC:CZ3155000000001043006511+RBCZ66*ALT-ACC:CZ3155000000001043006511+RBCZ66,CZ3155000000001043006511+RBCZ66,CZ3155000000001043006511+RBCZ66";
+        List<SmartPaymentValidationError> result = SmartPaymentValidator.validatePaymentString(paymentString);
+        // 0 error is expected
+        if (result != null && result.size() > 0) {
+            System.out.println(result.get(0).getErrorDescription());
+        }
+        assertNull(result);
+    }
+    
 }
