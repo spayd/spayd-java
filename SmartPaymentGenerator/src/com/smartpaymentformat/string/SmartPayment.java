@@ -16,7 +16,7 @@ public class SmartPayment {
     private static String protocolVersion = "1.0";
 
     public static String paymentStringFromAccount(SmartPaymentParameters parameters, SmartPaymentMap extendedParameters, boolean transliterateParams) {
-        String paymentString = "PAY*" + protocolVersion + "*";
+        String paymentString = "SPD*" + protocolVersion + "*";
         if (parameters.getBankAccount().getIBAN() != null) {
             paymentString += "ACC:" + parameters.getBankAccount().getIBAN();
             if (parameters.getBankAccount().getBIC() != null) {
@@ -71,7 +71,7 @@ public class SmartPayment {
             }
         }
         if (parameters.getNotificationValue() != null) {
-            paymentString += "NV:" + parameters.getNotificationValue() + "*";
+            paymentString += "NTA:" + parameters.getNotificationValue() + "*";
         }
         if (extendedParameters != null && !extendedParameters.isEmpty()) {
             paymentString += (transliterateParams
