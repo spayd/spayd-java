@@ -33,7 +33,7 @@ public class SmartPaymentMap extends HashMap<String, String> {
             if (!key.startsWith("X-")) {
                 key = "X-" + key;
             }
-            returnValue += key + ":" + value + "/";
+            returnValue += key + ":" + value + "*";
         }
         return returnValue;
     }
