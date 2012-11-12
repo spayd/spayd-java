@@ -76,7 +76,7 @@ public class SmartPayment {
         if (extendedParameters != null && !extendedParameters.isEmpty()) {
             paymentString += (transliterateParams
                     ? Junidecode.unidecode(extendedParameters.toExtendedParams().toUpperCase())
-                    : extendedParameters.toExtendedParams()).replaceAll("\\*", "%2A");
+                    : extendedParameters.toExtendedParams());
         }
         return paymentString.substring(0, paymentString.length() - 1);
     }
