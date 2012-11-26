@@ -29,7 +29,16 @@ public class SmartPaymentValidator {
 
     public static List<SmartPaymentValidationError> validatePaymentString(String paymentString) {
         List<SmartPaymentValidationError> errors = new LinkedList<SmartPaymentValidationError>();
-        if (!paymentString.matches("SPD\\*[0-9]+\\.[0-9]+(\\*[0-9A-Z $%*+-.]+:[^\\*]+)+\\*?")) {
+        
+        if (!paymentString.matches("^SPD\\*[0-9]+\\.[0-9]+\\*")) {
+            SmartPaymentValidationError error = new SmartPaymentValidationError();
+            error.setErrorCode(SmartPaymentValidationError.ERROR_NOT_SPAYD);
+            error.setErrorDescription("Invalid data prefix - SPD*{$VERSION}* expected.");
+            errors.add(error);
+            return errors;
+        }
+        
+        if (!paymentString.matches("^SPD\\*[0-9]+\\.[0-9]+(\\*[0-9A-Z $%*+-.]+:[^\\*]+)+\\*?$")) {
             SmartPaymentValidationError error = new SmartPaymentValidationError();
             error.setErrorCode(SmartPaymentValidationError.ERROR_INVALID_STRUCTURE);
             error.setErrorDescription("Payment String code didn't pass the basic regexp validation.");

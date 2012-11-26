@@ -12,6 +12,7 @@ public class SmartPaymentValidationError {
     private String errorCode;
     private String errorDescription;
     
+    public static String ERROR_NOT_SPAYD                    = "ERROR_NOT_SPAYD";
     public static String ERROR_INVALID_STRUCTURE            = "ERROR_INVALID_STRUCTURE";
     public static String ERROR_INVALID_AMOUNT               = "ERROR_INVALID_AMOUNT";
     public static String ERROR_INVALID_CURRENCY             = "ERROR_INVALID_CURRENCY";
