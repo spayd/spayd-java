@@ -89,16 +89,18 @@ public class SmartPaymentQRUtils {
             g.setColor(Color.WHITE);
             g.fillRect(2*barsize, h - fm.getAscent(), (int) rect.getWidth() + 4*barsize, (int) rect.getHeight());
             
-            BufferedImage paddedImage = new BufferedImage(w, h + (int) rect.getHeight(), image.getType());
+            int padding = 4*barsize;
+            
+            BufferedImage paddedImage = new BufferedImage(w + 2*padding, h + 2*padding, image.getType());
             Graphics2D g2 = paddedImage.createGraphics();
             g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             g2.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
             g2.setPaint(Color.WHITE);
             g2.fillRect(0, 0, paddedImage.getWidth(), paddedImage.getHeight());
-            g2.drawImage(image, 0, 0, Color.WHITE, null);
+            g2.drawImage(image, padding, padding, Color.WHITE, null);
 
             g2.setColor(Color.BLACK);
-            g2.drawString(str, 4 * barsize, paddedImage.getHeight() - barsize);
+            g2.drawString(str, padding + 4 * barsize, (int) (padding + h + rect.getHeight() - barsize));
             
             image = paddedImage;
         }
