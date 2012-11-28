@@ -39,7 +39,7 @@ public class SmartPaymentValidatorTest {
     @Test
     public void testValidatePaymentStringBasic() {
         System.out.println("validatePaymentString");
-        String paymentString = "PAY*1.0*232131";
+        String paymentString = "SPD*1.0*232131";
         List result = SmartPaymentValidator.validatePaymentString(paymentString);
         // 1 error is expected
         assertEquals(result.size(), 1);
@@ -51,7 +51,7 @@ public class SmartPaymentValidatorTest {
     @Test
     public void testValidatePaymentStringSimpleCorrect() {
         System.out.println("validatePaymentString");
-        String paymentString = "PAY*1.0*ACC:CZ3155000000001043006511";
+        String paymentString = "SPD*1.0*ACC:CZ3155000000001043006511";
         List<SmartPaymentValidationError> result = SmartPaymentValidator.validatePaymentString(paymentString);
         // 0 error is expected
         if (result != null && result.size() > 0) {
@@ -66,7 +66,22 @@ public class SmartPaymentValidatorTest {
     @Test
     public void testValidatePaymentStringAlternateAccounts() {
         System.out.println("testValidatePaymentStringAlternateAccounts");
-        String paymentString = "PAY*1.0*ACC:CZ3155000000001043006511+RBCZ66*ALT-ACC:CZ3155000000001043006511+RBCZ66,CZ3155000000001043006511+RBCZ66,CZ3155000000001043006511+RBCZ66";
+        String paymentString = "SPD*1.0*ACC:CZ3155000000001043006511+RBCZ66*ALT-ACC:CZ3155000000001043006511+RBCZ66,CZ3155000000001043006511+RBCZ66,CZ3155000000001043006511+RBCZ66";
+        List<SmartPaymentValidationError> result = SmartPaymentValidator.validatePaymentString(paymentString);
+        // 0 error is expected
+        if (result != null && result.size() > 0) {
+            System.out.println(result.get(0).getErrorDescription());
+        }
+        assertNull(result);
+    }
+    
+    /**
+     * Test of the situation with "**" in the string.
+     */
+    @Test
+    public void testDoubleStarInString() {
+        System.out.println("testDoubleStarInString");
+        String paymentString = "SPD*1.0*AM:100**ACC:CZ05678876589087329";
         List<SmartPaymentValidationError> result = SmartPaymentValidator.validatePaymentString(paymentString);
         // 0 error is expected
         if (result != null && result.size() > 0) {

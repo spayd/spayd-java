@@ -46,7 +46,7 @@ public class SmartPaymentTest {
         parameters.setBankAccount(new CzechBankAccount("19", "123", "0800"));
         SmartPaymentMap extendedParameters = null;
         boolean transliterateParams = false;
-        String expResult = "PAY*1.0*ACC:CZ2408000000190000000123";
+        String expResult = "SPD*1.0*ACC:CZ2408000000190000000123";
         String result = SmartPayment.paymentStringFromAccount(parameters, extendedParameters, transliterateParams);
         assertEquals(expResult, result);
     }
@@ -66,7 +66,7 @@ public class SmartPaymentTest {
         parameters.setAmount(100.5);
         SmartPaymentMap extendedParameters = null;
         boolean transliterateParams = false;
-        String expResult = "PAY*1.0*ACC:CZ2408000000190000000123*ALT-ACC:CZ2408000000190000000123,CZ2408000000190000000123*AM:100.5";
+        String expResult = "SPD*1.0*ACC:CZ2408000000190000000123*ALT-ACC:CZ2408000000190000000123,CZ2408000000190000000123*AM:100.5";
         String result = SmartPayment.paymentStringFromAccount(parameters, extendedParameters, transliterateParams);
         assertEquals(expResult, result);
     }
