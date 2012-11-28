@@ -60,6 +60,7 @@ public class SmartPaymentValidator {
                 error.setErrorCode(SmartPaymentValidationError.ERROR_INVALID_STRUCTURE);
                 error.setErrorDescription("Payment String code didn't pass the basic regexp validation.");
                 errors.add(error);
+                continue;
             }
             String key = components[i].substring(0, index);
             String value = components[i].substring(index + 1);
