@@ -55,6 +55,12 @@ public class SmartPaymentValidator {
         // skip the header and version => start with 2
         for (int i = 2; i < components.length; i++) {
             int index = components[i].indexOf(":");
+            if (index == -1) { // missing pair between two stars ("**")
+                SmartPaymentValidationError error = new SmartPaymentValidationError();
+                error.setErrorCode(SmartPaymentValidationError.ERROR_INVALID_STRUCTURE);
+                error.setErrorDescription("Payment String code didn't pass the basic regexp validation.");
+                errors.add(error);
+            }
             String key = components[i].substring(0, index);
             String value = components[i].substring(index + 1);
 
