@@ -87,7 +87,7 @@ public class SmartPaymentValidatorTest {
         if (result != null && result.size() > 0) {
             System.out.println(result.get(0).getErrorDescription());
         }
-        assertNull(result);
+        assertEquals(result.size(), 1);
     }
     
 }
