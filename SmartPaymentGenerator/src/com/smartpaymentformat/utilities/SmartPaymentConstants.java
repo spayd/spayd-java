@@ -9,7 +9,8 @@ package com.smartpaymentformat.utilities;
  */
 public class SmartPaymentConstants {
     
-    public static Integer minQRSize = 250;
+    public static Integer minQRSize = 100;
+    public static Integer defQRSize = 250;
     public static Integer maxQRSize = 800;
     
 }

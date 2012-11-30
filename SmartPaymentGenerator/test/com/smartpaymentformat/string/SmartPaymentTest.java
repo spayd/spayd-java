@@ -6,6 +6,7 @@ package com.smartpaymentformat.string;
 
 import com.smartpaymentformat.account.BankAccount;
 import com.smartpaymentformat.account.CzechBankAccount;
+import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -40,7 +41,7 @@ public class SmartPaymentTest {
      * Test of paymentStringFromAccount method, of class SmartPayment.
      */
     @Test
-    public void testPaymentStringFromAccount() {
+    public void testPaymentStringFromAccount() throws UnsupportedEncodingException {
         System.out.println("paymentStringFromAccount");
         SmartPaymentParameters parameters = new SmartPaymentParameters();
         parameters.setBankAccount(new CzechBankAccount("19", "123", "0800"));
@@ -55,7 +56,7 @@ public class SmartPaymentTest {
      * Test of paymentStringFromAccount method, of class SmartPayment.
      */
     @Test
-    public void testPaymentStringFromAccountAmountAndAlternateAccounts() {
+    public void testPaymentStringFromAccountAmountAndAlternateAccounts() throws UnsupportedEncodingException {
         System.out.println("paymentStringFromAccount");
         SmartPaymentParameters parameters = new SmartPaymentParameters();
         parameters.setBankAccount(new CzechBankAccount("19", "123", "0800"));

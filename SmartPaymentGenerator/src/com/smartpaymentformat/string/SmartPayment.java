@@ -4,6 +4,8 @@
 package com.smartpaymentformat.string;
 
 import com.smartpaymentformat.account.BankAccount;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import net.sf.junidecode.Junidecode;
 
@@ -15,7 +17,7 @@ public class SmartPayment {
 
     private static String protocolVersion = "1.0";
 
-    public static String paymentStringFromAccount(SmartPaymentParameters parameters, SmartPaymentMap extendedParameters, boolean transliterateParams) {
+    public static String paymentStringFromAccount(SmartPaymentParameters parameters, SmartPaymentMap extendedParameters, boolean transliterateParams) throws UnsupportedEncodingException {
         String paymentString = "SPD*" + protocolVersion + "*";
         if (parameters.getBankAccount().getIBAN() != null) {
             paymentString += "ACC:" + parameters.getBankAccount().getIBAN();
@@ -50,18 +52,30 @@ public class SmartPayment {
             paymentString += "RF:" + parameters.getSendersReference() + "*";
         }
         if (parameters.getRecipientName() != null) {
-            paymentString += "RN:" + (transliterateParams
-                    ? Junidecode.unidecode(parameters.getRecipientName().toUpperCase())
-                    : parameters.getRecipientName()).replaceAll("\\*", "%2A") + "*";
+            if (transliterateParams) {
+                paymentString += "RN:" 
+                        + URLEncoder.encode(Junidecode.unidecode(parameters.getRecipientName().toUpperCase()), "UTF-8")
+                        + "*";
+            } else {
+                paymentString += "RN:"
+                        + URLEncoder.encode(parameters.getRecipientName(), "UTF-8")
+                        + "*";
+            }
         }
         if (parameters.getDate() != null) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
             paymentString += "DT:" + simpleDateFormat.format(parameters.getDate()) + "*";
         }
         if (parameters.getMessage() != null) {
-            paymentString += "MSG:" + (transliterateParams
-                    ? Junidecode.unidecode(parameters.getMessage().toUpperCase())
-                    : parameters.getMessage()).replaceAll("\\*", "%2A") + "*";
+            if (transliterateParams) {
+                paymentString += "MSG:" 
+                        + URLEncoder.encode(Junidecode.unidecode(parameters.getMessage().toUpperCase()), "UTF-8")
+                        + "*";
+            } else {
+                paymentString += "MSG:"
+                        + URLEncoder.encode(parameters.getMessage(), "UTF-8")
+                        + "*";
+            }
         }
         if (parameters.getNotificationType() != null) {
             if (parameters.getNotificationType() == SmartPaymentParameters.PaymentNotificationType.email) {
@@ -74,9 +88,7 @@ public class SmartPayment {
             paymentString += "NTA:" + parameters.getNotificationValue() + "*";
         }
         if (extendedParameters != null && !extendedParameters.isEmpty()) {
-            paymentString += (transliterateParams
-                    ? Junidecode.unidecode(extendedParameters.toExtendedParams().toUpperCase())
-                    : extendedParameters.toExtendedParams());
+            paymentString += extendedParameters.toExtendedParams();
         }
         return paymentString.substring(0, paymentString.length() - 1);
     }

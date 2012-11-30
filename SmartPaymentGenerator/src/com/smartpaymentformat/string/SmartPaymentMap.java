@@ -3,6 +3,8 @@
  */
 package com.smartpaymentformat.string;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +26,7 @@ public class SmartPaymentMap extends HashMap<String, String> {
         }
     }
     
-    public String toExtendedParams() {
+    public String toExtendedParams() throws UnsupportedEncodingException {
         String returnValue = "";
         for (String key : keySet()) {
             key = key.toUpperCase();
@@ -33,7 +35,7 @@ public class SmartPaymentMap extends HashMap<String, String> {
             if (!key.startsWith("X-")) {
                 key = "X-" + key;
             }
-            returnValue += key + ":" + value.replaceAll("\\*", "%2A") + "*";
+            returnValue += key + ":" + (URLEncoder.encode(value, "ISO-8859-1")) + "*";
         }
         return returnValue;
     }

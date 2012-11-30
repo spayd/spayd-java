@@ -36,14 +36,14 @@ public class SmartPaymentQRUtils {
     }
 
     public static BufferedImage getQRCode(Integer size, String paymentString, boolean hasBranging) throws IOException {
-        if (size == null || size < SmartPaymentConstants.minQRSize) {
+        if (size == null) {
+            size = SmartPaymentConstants.defQRSize;
+        } else if (size < SmartPaymentConstants.minQRSize) {
             size = SmartPaymentConstants.minQRSize;
         } else if (size > SmartPaymentConstants.maxQRSize) {
             size = SmartPaymentConstants.maxQRSize;
         }
 
-        String data;
-        // get a byte matrix for the data
         BitMatrix matrix = null;
         int h = size;
         int w = size;
@@ -51,11 +51,10 @@ public class SmartPaymentQRUtils {
         Writer writer = new MultiFormatWriter();
         try {
             Map<EncodeHintType, Object> hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
-            hints.put(EncodeHintType.CHARACTER_SET, "ASCII");
-            hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-            QRCode code = new QRCode();
-            Encoder.encode(paymentString, ErrorCorrectionLevel.L, code);
-            barsize = size / (code.getMatrixWidth() + 8);
+            hints.put(EncodeHintType.CHARACTER_SET, "ISO-8859-1");
+            QRCode code = Encoder.encode(paymentString, ErrorCorrectionLevel.M, hints);
+            hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
+            barsize = size / (code.getMatrix().getWidth() + 8);
             matrix = writer.encode(paymentString, com.google.zxing.BarcodeFormat.QR_CODE, w, h, hints);
         } catch (com.google.zxing.WriterException e) {
             System.out.println(e.getMessage());
@@ -69,7 +68,7 @@ public class SmartPaymentQRUtils {
 
         if (hasBranging) {
             Graphics2D g = (Graphics2D) image.getGraphics();
-            
+
             BasicStroke bs = new BasicStroke(2);
             g.setStroke(bs);
             g.setColor(Color.BLACK);
@@ -80,28 +79,28 @@ public class SmartPaymentQRUtils {
 
             String str = "QR Platba";
             int fontSize = size / 12;
-            
-            g.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-            
+
+            g.setFont(new Font("Arial", Font.BOLD, fontSize));
+
             FontMetrics fm = g.getFontMetrics();
             Rectangle2D rect = fm.getStringBounds(str, g);
 
             g.setColor(Color.WHITE);
-            g.fillRect(2*barsize, h - fm.getAscent(), (int) rect.getWidth() + 4*barsize, (int) rect.getHeight());
-            
-            int padding = 4*barsize;
-            
-            BufferedImage paddedImage = new BufferedImage(w + 2*padding, h + 2*padding, image.getType());
+            g.fillRect(2 * barsize, h - fm.getAscent(), (int) rect.getWidth() + 4 * barsize, (int) rect.getHeight());
+
+            int padding = 4 * barsize;
+
+            BufferedImage paddedImage = new BufferedImage(w + 2 * padding, h + padding + (int) rect.getHeight(), image.getType());
             Graphics2D g2 = paddedImage.createGraphics();
-            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            g2.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+            g2.setFont(new Font("Arial", Font.BOLD, fontSize));
             g2.setPaint(Color.WHITE);
             g2.fillRect(0, 0, paddedImage.getWidth(), paddedImage.getHeight());
             g2.drawImage(image, padding, padding, Color.WHITE, null);
 
             g2.setColor(Color.BLACK);
             g2.drawString(str, padding + 4 * barsize, (int) (padding + h + rect.getHeight() - barsize));
-            
+
             image = paddedImage;
         }
 
