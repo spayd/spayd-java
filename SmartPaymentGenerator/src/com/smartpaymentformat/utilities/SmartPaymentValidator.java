@@ -3,6 +3,9 @@
  */
 package com.smartpaymentformat.utilities;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -27,8 +30,16 @@ public class SmartPaymentValidator {
         "NTA",
         "CRC32"};
 
-    public static List<SmartPaymentValidationError> validatePaymentString(String paymentString) {
+    public static List<SmartPaymentValidationError> validatePaymentString(String paymentString) throws UnsupportedEncodingException {
         List<SmartPaymentValidationError> errors = new LinkedList<SmartPaymentValidationError>();
+        
+        if (!Charset.forName("ISO-8859-1").newEncoder().canEncode(paymentString)) { // check encoding
+            SmartPaymentValidationError error = new SmartPaymentValidationError();
+            error.setErrorCode(SmartPaymentValidationError.ERROR_INVALID_CHARSET);
+            error.setErrorDescription("Invalid charset - only ISO-8859-1 characters must be used");
+            errors.add(error);
+            return errors;
+        } 
         
         if (!paymentString.matches("^SPD\\*[0-9]+\\.[0-9]+\\*.*")) {
             SmartPaymentValidationError error = new SmartPaymentValidationError();

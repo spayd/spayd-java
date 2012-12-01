@@ -4,6 +4,7 @@
  */
 package com.smartpaymentformat.utilities;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -37,7 +38,7 @@ public class SmartPaymentValidatorTest {
      * Test of validatePaymentString method, of class SmartPaymentValidator.
      */
     @Test
-    public void testValidatePaymentStringBasic() {
+    public void testValidatePaymentStringBasic() throws UnsupportedEncodingException {
         System.out.println("validatePaymentString");
         String paymentString = "SPD*1.0*232131";
         List result = SmartPaymentValidator.validatePaymentString(paymentString);
@@ -49,7 +50,7 @@ public class SmartPaymentValidatorTest {
      * Test of validatePaymentString method, of class SmartPaymentValidator.
      */
     @Test
-    public void testValidatePaymentStringSimpleCorrect() {
+    public void testValidatePaymentStringSimpleCorrect() throws UnsupportedEncodingException {
         System.out.println("validatePaymentString");
         String paymentString = "SPD*1.0*ACC:CZ3155000000001043006511";
         List<SmartPaymentValidationError> result = SmartPaymentValidator.validatePaymentString(paymentString);
@@ -64,7 +65,7 @@ public class SmartPaymentValidatorTest {
      * Test of generating Paylibo string with alternate account
      */
     @Test
-    public void testValidatePaymentStringAlternateAccounts() {
+    public void testValidatePaymentStringAlternateAccounts() throws UnsupportedEncodingException {
         System.out.println("testValidatePaymentStringAlternateAccounts");
         String paymentString = "SPD*1.0*ACC:CZ3155000000001043006511+RBCZ66*ALT-ACC:CZ3155000000001043006511+RBCZ66,CZ3155000000001043006511+RBCZ66,CZ3155000000001043006511+RBCZ66";
         List<SmartPaymentValidationError> result = SmartPaymentValidator.validatePaymentString(paymentString);
@@ -79,7 +80,7 @@ public class SmartPaymentValidatorTest {
      * Test of the situation with "**" in the string.
      */
     @Test
-    public void testDoubleStarInString() {
+    public void testDoubleStarInString() throws UnsupportedEncodingException {
         System.out.println("testDoubleStarInString");
         String paymentString = "SPD*1.0*AM:100**ACC:CZ05678876589087329";
         List<SmartPaymentValidationError> result = SmartPaymentValidator.validatePaymentString(paymentString);
