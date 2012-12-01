@@ -169,10 +169,10 @@ public class SmartPaymentValidator {
                     errors.add(error);
                 }
             } else if (key.equals("MSG")) {
-                if (value.length() > 35 || value.length() < 1) {
+                if (value.length() > 60 || value.length() < 1) {
                     SmartPaymentValidationError error = new SmartPaymentValidationError();
                     error.setErrorCode(SmartPaymentValidationError.ERROR_INVALID_MESSAGE);
-                    error.setErrorDescription("Message must be at represented as a string with length between 1 and 35 characters.");
+                    error.setErrorDescription("Message must be at represented as a string with length between 1 and 60 characters.");
                     errors.add(error);
                 }
             }
