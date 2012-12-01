@@ -4,6 +4,7 @@
 package com.smartpaymentformat.utilities;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.text.ParseException;
@@ -74,7 +75,7 @@ public class SmartPaymentValidator {
                 continue;
             }
             String key = components[i].substring(0, index);
-            String value = components[i].substring(index + 1);
+            String value = URLDecoder.decode(components[i].substring(index + 1), "UTF-8");
 
             if (!allowedKeyList.contains(key) && !key.startsWith("X-")) {
                 SmartPaymentValidationError error = new SmartPaymentValidationError();
