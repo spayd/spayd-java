@@ -52,6 +52,14 @@ public class SmartPaymentTest {
         assertEquals(expResult, result);
     }
     
+    @Test
+    public void testSpecialCharacterEscaping() throws UnsupportedEncodingException {
+        String original = "abc  123\u2665\u2620**123  abc-+ěščřžýáíé---%20";
+        System.out.println(SmartPayment.escapeDisallowedCharacters(original));
+        String expected = "abc  123%E2%99%A5%E2%98%A0%2A%2A123  abc-%2B%C4%9B%C5%A1%C4%8D%C5%99%C5%BE%C3%BD%C3%A1%C3%AD%C3%A9---%20";
+        assertEquals(expected, SmartPayment.escapeDisallowedCharacters(original));
+    }
+    
     /**
      * Test of paymentStringFromAccount method, of class SmartPayment.
      */
@@ -67,8 +75,9 @@ public class SmartPaymentTest {
         parameters.setAmount(100.5);
         SmartPaymentMap extendedParameters = null;
         boolean transliterateParams = false;
-        String expResult = "SPD*1.0*ACC:CZ2408000000190000000123*ALT-ACC:CZ2408000000190000000123,CZ2408000000190000000123*AM:100.5";
+        String expResult = "SPD*1.0*ACC:CZ2408000000190000000123*ALT-ACC:CZ9755000000000000000019,CZ7301000000000000000019*AM:100.5";
         String result = SmartPayment.paymentStringFromAccount(parameters, extendedParameters, transliterateParams);
+        System.out.println(result);
         assertEquals(expResult, result);
     }
 }

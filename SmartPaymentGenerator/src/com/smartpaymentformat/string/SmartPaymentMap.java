@@ -35,7 +35,7 @@ public class SmartPaymentMap extends HashMap<String, String> {
             if (!key.startsWith("X-")) {
                 key = "X-" + key;
             }
-            returnValue += key + ":" + (URLEncoder.encode(value, "ISO-8859-1")) + "*";
+            returnValue += key + ":" + SmartPayment.escapeDisallowedCharacters(value) + "*";
         }
         return returnValue;
     }

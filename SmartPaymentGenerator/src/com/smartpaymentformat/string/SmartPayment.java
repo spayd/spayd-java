@@ -16,6 +16,26 @@ import net.sf.junidecode.Junidecode;
 public class SmartPayment {
 
     private static String protocolVersion = "1.0";
+    
+    public static String escapeDisallowedCharacters(String originalString) throws UnsupportedEncodingException {
+        String working = "";
+        for (int i = 0; i < originalString.length(); i++) {
+            if (originalString.charAt(i) > 127) { // escape non-ascii characters
+                working += URLEncoder.encode("" + originalString.charAt(i), "UTF-8");
+            } else {
+                if (originalString.charAt(i) == '*') { // star is a special character for the SPAYD format
+                    working += "%2A";
+                } else if (originalString.charAt(i) == '+') { // plus is a special character for URL encode
+                    working += "%2B";
+                } else if (originalString.charAt(i) == '%') { // percent is an escape character
+                    working += "%25";
+                } else {
+                    working += originalString.charAt(i); // ascii characters may be used as expected
+                }
+            }
+        }
+        return working;
+    }
 
     public static String paymentStringFromAccount(SmartPaymentParameters parameters, SmartPaymentMap extendedParameters, boolean transliterateParams) throws UnsupportedEncodingException {
         String paymentString = "SPD*" + protocolVersion + "*";
@@ -35,9 +55,9 @@ public class SmartPayment {
                 } else {
                     firstItem = false;
                 }
-                paymentString += parameters.getBankAccount().getIBAN();
-                if (parameters.getBankAccount().getBIC() != null) {
-                    paymentString += "+" + parameters.getBankAccount().getBIC();
+                paymentString += bankAccount.getIBAN();
+                if (bankAccount.getBIC() != null) {
+                    paymentString += "+" + bankAccount.getBIC();
                 }
             }
             paymentString += "*";
@@ -54,11 +74,11 @@ public class SmartPayment {
         if (parameters.getRecipientName() != null) {
             if (transliterateParams) {
                 paymentString += "RN:" 
-                        + URLEncoder.encode(Junidecode.unidecode(parameters.getRecipientName().toUpperCase()), "UTF-8")
+                        + SmartPayment.escapeDisallowedCharacters(Junidecode.unidecode(parameters.getRecipientName().toUpperCase()))
                         + "*";
             } else {
                 paymentString += "RN:"
-                        + URLEncoder.encode(parameters.getRecipientName(), "UTF-8")
+                        + SmartPayment.escapeDisallowedCharacters(parameters.getRecipientName())
                         + "*";
             }
         }
@@ -69,11 +89,11 @@ public class SmartPayment {
         if (parameters.getMessage() != null) {
             if (transliterateParams) {
                 paymentString += "MSG:" 
-                        + URLEncoder.encode(Junidecode.unidecode(parameters.getMessage().toUpperCase()), "UTF-8")
+                        + SmartPayment.escapeDisallowedCharacters(Junidecode.unidecode(parameters.getMessage().toUpperCase()))
                         + "*";
             } else {
                 paymentString += "MSG:"
-                        + URLEncoder.encode(parameters.getMessage(), "UTF-8")
+                        + SmartPayment.escapeDisallowedCharacters(parameters.getMessage())
                         + "*";
             }
         }
@@ -85,7 +105,7 @@ public class SmartPayment {
             }
         }
         if (parameters.getNotificationValue() != null) {
-            paymentString += "NTA:" + parameters.getNotificationValue() + "*";
+            paymentString += "NTA:" + SmartPayment.escapeDisallowedCharacters(parameters.getNotificationValue()) + "*";
         }
         if (extendedParameters != null && !extendedParameters.isEmpty()) {
             paymentString += extendedParameters.toExtendedParams();
