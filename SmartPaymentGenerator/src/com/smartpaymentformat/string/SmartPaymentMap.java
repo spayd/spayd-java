@@ -4,7 +4,6 @@
 package com.smartpaymentformat.string;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,11 +13,13 @@ import java.util.Map;
  */
 public class SmartPaymentMap extends HashMap<String, String> {
 
-    public SmartPaymentMap(Map<String, String[]> map) {
+    public SmartPaymentMap(Map<String, String> map) {
         for (String key : map.keySet()) {
             key = key.toUpperCase();
-            if (map.get(key) == null) continue;
-            String value = map.get(key).toString().toUpperCase();
+            if (map.get(key) == null) {
+                continue;
+            }
+            String value = map.get(key).toUpperCase();
             if (!key.startsWith("X-")) {
                 key = "X-" + key;
             }
@@ -31,7 +32,9 @@ public class SmartPaymentMap extends HashMap<String, String> {
         for (String key : keySet()) {
             key = key.toUpperCase();
             String value = this.get(key);
-            if (value == null) continue;
+            if (value == null) {
+                continue;
+            }
             if (!key.startsWith("X-")) {
                 key = "X-" + key;
             }
