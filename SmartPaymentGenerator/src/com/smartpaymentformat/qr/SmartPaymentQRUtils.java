@@ -80,7 +80,7 @@ public class SmartPaymentQRUtils {
             String str = "QR Platba";
             int fontSize = size / 12;
 
-            g.setFont(new Font("Arial", Font.BOLD, fontSize));
+            g.setFont(new Font("Verdana", Font.BOLD, fontSize));
 
             FontMetrics fm = g.getFontMetrics();
             Rectangle2D rect = fm.getStringBounds(str, g);
@@ -93,7 +93,7 @@ public class SmartPaymentQRUtils {
             BufferedImage paddedImage = new BufferedImage(w + 2 * padding, h + padding + (int) rect.getHeight(), image.getType());
             Graphics2D g2 = paddedImage.createGraphics();
             g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
-            g2.setFont(new Font("Arial", Font.BOLD, fontSize));
+            g2.setFont(new Font("Verdana", Font.BOLD, fontSize));
             g2.setPaint(Color.WHITE);
             g2.fillRect(0, 0, paddedImage.getWidth(), paddedImage.getHeight());
             g2.drawImage(image, padding, padding, Color.WHITE, null);
