@@ -74,8 +74,8 @@ public class CzechBankAccount extends BankAccount {
     public void setIBAN(String iban) {
         this.iban = iban;
         this.bankCode = iban.substring(4, 8);
-        this.number = iban.substring(16, 26);
-        this.prefix = iban.substring(9, 15);
+        this.number = iban.substring(14, 24);
+        this.prefix = iban.substring(8, 14);
     }
 
     @Override
