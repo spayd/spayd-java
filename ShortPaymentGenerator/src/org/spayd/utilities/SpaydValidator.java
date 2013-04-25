@@ -87,7 +87,7 @@ public class SpaydValidator {
 
             if (key.equals("ACC")) {
                 ibanFound = true;
-                if (!value.matches("^([A-Z]{2,2}[0-9]+)(\\+([A-Z0-9]+))?$")) {
+                if (!value.matches("^([A-Z]{2,2}[0-9]{2,2}[A-Z0-9]+)(\\+([A-Z0-9]+))?$")) {
                     SpaydValidationError error = new SpaydValidationError();
                     error.setErrorCode(SpaydValidationError.ERROR_INVALID_IBAN);
                     error.setErrorDescription("IBAN+BIC pair was not in the correct format.");
@@ -95,7 +95,7 @@ public class SpaydValidator {
                 }
             } else if (key.equals("ALT-ACC")) {
                 ibanFound = true;
-                if (!value.matches("^([A-Z]{2,2}[0-9]+)(\\+([A-Z0-9]+))?(,([A-Z]{2,2}[0-9]+)(\\+([A-Z0-9]+))?)*$")) {
+                if (!value.matches("^([A-Z]{2,2}[0-9]{2,2}[A-Z0-9]+)(\\+([A-Z0-9]+))?(,([A-Z]{2,2}[0-9]+)(\\+([A-Z0-9]+))?)*$")) {
                     SpaydValidationError error = new SpaydValidationError();
                     error.setErrorCode(SpaydValidationError.ERROR_INVALID_ALTERNATE_IBAN);
                     error.setErrorDescription("Alternate accounts are not properly formatted - should be IBAN+BIC list with items separated by ',' character.");
