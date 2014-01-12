@@ -145,7 +145,7 @@ public class SpaydValidator {
                     error.setErrorDescription("Due date must be represented as a decimal string in YYYYmmdd format.");
                     errors.add(error);
                 } else {
-                    SimpleDateFormat df = new SimpleDateFormat("yyyymmdd");
+                    SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
                     Date date;
                     try {
                         date = df.parse(value);
