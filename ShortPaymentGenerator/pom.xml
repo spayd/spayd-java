@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <packaging>jar</packaging>
+
+    <groupId>org.spayd</groupId>
+    <artifactId>ShortPaymentGenerator</artifactId>
+    <version>0.0.1</version>
+    <name>ShortPaymentGenerator</name>
+
+    <properties>
+        <encoding>UTF-8</encoding>
+        <project.resources.sourceEncoding>${encoding}</project.resources.sourceEncoding>
+    </properties>
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+        <testSourceDirectory>test</testSourceDirectory>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>zxingorg</artifactId>
+            <version>3.1.0</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.moparisthebest</groupId>
+            <artifactId>junidecode</artifactId>
+            <version>0.1.1</version>
+        </dependency>
+    </dependencies>
+</project>
